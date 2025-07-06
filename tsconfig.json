@@ -9,11 +9,11 @@
     }
   ],
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": ".", // Optional, since app handles this
     "paths": {
       "@/*": [
-        "./src/*"
-      ]
+        "src/*"
+      ] // Optional, not used directly here
     }
   }
 }

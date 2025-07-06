@@ -2,7 +2,7 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-
+/* 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -183,4 +183,4 @@ button:focus-visible {
   body {
     @apply bg-background text-foreground;
   }
-}
+} */
