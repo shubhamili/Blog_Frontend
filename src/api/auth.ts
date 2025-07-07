@@ -13,7 +13,20 @@ export const loginUser = async (data: LoginPayload): Promise<User> => {
 
 export const registerUser = async (
     data: RegisterPayload
-): Promise<{ token: string; user: User }> => {
+): Promise<{ user: User }> => {
     const res = await axios.post("/user/register", data);
     return res.data;
 };
+
+export const logoutUser = async () => {
+    const res = await axios.post("/user/logout"); // adjust route
+    return res.data;
+};
+  
+
+
+export const fetchCurrentUser = async () => {
+    const res = await axios.get("/user/getUserProfile");
+    return res.data;
+};
+  

@@ -7,4 +7,6 @@ export interface Blog {
     postPicture?: string;
     createdAt: string;
     updatedAt: string;
+    likes: string[],
+    comments: string[],
 }

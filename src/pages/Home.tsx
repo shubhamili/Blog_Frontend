@@ -3,7 +3,7 @@ import { getAllBlogs } from "@/api/blog";
 import { Blog } from "@/types/Blog";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import PostCard from "@/components/post/postCard";
+import PostCard from "@/components/post/PostCard";
 
 interface PaginatedResponse {
     posts: Blog[];

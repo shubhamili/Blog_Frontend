@@ -10,14 +10,14 @@ const Register = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const [name, setName] = useState("");
+    const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleRegister = async () => {
         try {
-            const { token, user } = await registerUser({ name, email, password });
-            dispatch(login({ token, user }));
+            const { user } = await registerUser({ userName, email, password });
+            dispatch(login({ user }));
             navigate("/");
         } catch (error) {
             alert("Register failed: " + (error as any).response?.data?.message || "Unknown error");
@@ -26,7 +26,7 @@ const Register = () => {
 
     return (
         <div className="max-w-sm mx-auto mt-10 space-y-4">
-            <Input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+            <Input placeholder="userName" value={userName} onChange={(e) => setUserName(e.target.value)} />
             <Input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <Button onClick={handleRegister} className="w-full">Register</Button>

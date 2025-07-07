@@ -30,7 +30,7 @@ const PostCard = ({ post }: { post: Blog }) => {
 
                 <div className="text-sm text-gray-500 flex items-center justify-between">
                     <span>
-                        By <strong>{post.author?.name || "Anonymous"}</strong>
+                        By <strong>{post.author?.userName || "Anonymous"}</strong>
                     </span>
                     <span>
                         {new Date(post.createdAt).toLocaleDateString()}
