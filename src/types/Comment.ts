@@ -7,4 +7,10 @@ export interface Comment {
     blogId: string;
     createdAt: string;
 }
-  
+// export interface Comment {
+//     comment: string;
+//     user: {
+//         _id: string;
+//         userName: string;
+//     };
+// }

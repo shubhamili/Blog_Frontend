@@ -1,6 +1,8 @@
 export interface User {
-    _id: string;
+    id: string;
     userName: string;
     email: string;
-    role?: "user" | "admin";
+    role?: "user" | "admin" | "editor";
+    profilePicture: string
 }
+  

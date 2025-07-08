@@ -8,6 +8,7 @@ import Home from "@/pages/Home";
 import EditBlog from "@/pages/blog/EditBlog";
 import BlogDetail from "@/pages/blog/BlogDetail";
 import CreateBlog from "@/pages/blog/CreateBlog";
+import UserProfile from "@/pages/profile/UserProfile";
 
 
 
@@ -44,6 +45,15 @@ const AppRoutes = () => {
                     </PrivateRoute>
                 }
             />
+            <Route
+                path="/profile"
+                element={
+                    <PrivateRoute>
+                        <UserProfile />
+                    </PrivateRoute>
+                }
+            />
+
             <Route path="/blogs/:id" element={<BlogDetail />} />
 
             {/* Catch-all */}

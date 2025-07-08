@@ -43,3 +43,16 @@ export const deleteBlog = async (id: string): Promise<{ message: string }> => {
     const res = await axios.delete(`post/deletePost/${id}`);
     return res.data;
 };
+
+
+
+export const likePost = async (postId: string) => {
+    const res = await axios.post(`/post/like/${postId}`);
+    return res.data;
+};
+
+
+export const addComment = async (postId: string, comment: string) => {
+    const res = await axios.post(`/post/comment/${postId}`, { comment });
+    return res.data;
+};

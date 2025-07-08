@@ -31,14 +31,18 @@ const EditBlog = () => {
     }, [id]);
 
     const handleUpdate = async () => {
-        if (!content || !newImage) {
-            alert("Content and new image are required");
+        if (!content && !existingImage) {
+            alert("Content and image are required.");
             return;
         }
 
         const formData = new FormData();
         formData.append("content", content);
-        formData.append("postPicture", newImage);
+
+        // ✅ only send new image if selected
+        if (newImage) {
+            formData.append("postPicture", newImage);
+        }
 
         try {
             await updateBlog(id!, formData);
@@ -47,6 +51,7 @@ const EditBlog = () => {
             alert("Failed to update blog.");
         }
     };
+      
 
     if (loading) return <p className="text-center">Loading...</p>;
 
@@ -75,7 +80,7 @@ const EditBlog = () => {
                 />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 border-amber-700">
                 <Label htmlFor="image">Upload New Image</Label>
                 <Input
                     id="image"
