@@ -1,5 +1,5 @@
 import axios from "./config";
-import { Blog } from "@/types/Blog";
+import { Blog, LikeResponse } from "@/types/Blog";
 
 
 interface PaginatedBlogResponse {
@@ -44,15 +44,23 @@ export const deleteBlog = async (id: string): Promise<{ message: string }> => {
     return res.data;
 };
 
+// src/api/blog.ts
 
-
-export const likePost = async (postId: string) => {
-    const res = await axios.post(`/post/like/${postId}`);
+export const likePost = async (postId: string): Promise<LikeResponse> => {
+    const res = await axios.post(`/post/likePost/${postId}`);
     return res.data;
 };
 
 
+// export const likePost = async (postId: string) => {
+//     // const res = await axios.post(`/post/like/${postId}`);
+//     const res = await axios.post(`/post/likePost/${postId}`);
+//     return res.data;
+// };
+
+
 export const addComment = async (postId: string, comment: string) => {
-    const res = await axios.post(`/post/comment/${postId}`, { comment });
+    // const res = await axios.post(`/post/comment/${postId}`, { comment });
+    const res = await axios.post(`/post/addComment/${postId}`, { comment });
     return res.data;
 };

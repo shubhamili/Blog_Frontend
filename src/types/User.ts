@@ -1,8 +1,7 @@
 export interface User {
-    id: string;
+    _id: string; // <-- Add this line
     userName: string;
     email: string;
-    role?: "user" | "admin" | "editor";
-    profilePicture: string
+    profilePicture?: string;
+    role?: "user" | "admin" | "editor"; // Optional: extend based on your app
 }
-  
