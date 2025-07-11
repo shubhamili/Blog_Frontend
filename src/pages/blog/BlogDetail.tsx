@@ -25,10 +25,7 @@ const BlogDetail = () => {
         try {
             setIsLoading(true);
             abortControllerRef.current = new AbortController();
-
-            const res = await getBlogById(id, {
-                signal: abortControllerRef.current.signal
-            });
+            const res = await getBlogById(id);
             setBlog(res.data);
         } catch (error: any) {
             if (error.name !== 'AbortError') {

@@ -60,7 +60,6 @@ export const likePost = async (postId: string): Promise<LikeResponse> => {
 
 
 export const addComment = async (postId: string, comment: string) => {
-    // const res = await axios.post(`/post/comment/${postId}`, { comment });
     const res = await axios.post(`/post/addComment/${postId}`, { comment });
     return res.data;
 };

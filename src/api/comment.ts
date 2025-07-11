@@ -9,11 +9,7 @@ export const getCommentsForBlog = async (blogId: string): Promise<Comment[]> => 
 
 // Add a new comment to a blog/post
 export const commentOnPost = async (postId: string, comment: string) => {
-    const res = await axios.post(
-        `/api/posts/${postId}/comment`, // 👈 this is the correct route
-        { comment },
-        { withCredentials: true } // 👈 include cookies for auth
-    );
+    const res = await axios.post(`/api/posts/${postId}/comment`, { comment }, { withCredentials: true });
     return res.data;
 };
 

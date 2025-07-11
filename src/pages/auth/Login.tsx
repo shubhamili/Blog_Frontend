@@ -15,7 +15,7 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            const  user  = await loginUser({ userName, password });
+            const user = await loginUser({ userName, password });
             dispatch(login({ user }));
             navigate("/home");
         } catch (error) {
@@ -25,9 +25,10 @@ const Login = () => {
 
     return (
         <div className="max-w-sm mx-auto mt-10 space-y-4">
+            <h1 className="font-black">LOG-IN YOURSELF :</h1>
             <Input placeholder="User Name" value={userName} onChange={(e) => setUserName(e.target.value)} />
             <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <Button onClick={handleLogin} className="w-full">Login</Button>
+            <Button onClick={handleLogin} className="w-full border-b-red ">Login</Button>
         </div>
     );
 };

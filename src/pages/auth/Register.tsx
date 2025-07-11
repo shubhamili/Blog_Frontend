@@ -26,7 +26,8 @@ const Register = () => {
 
     return (
         <div className="max-w-sm mx-auto mt-10 space-y-4">
-            <Input placeholder="userName" value={userName} onChange={(e) => setUserName(e.target.value)} />
+            <h1 className="font-black">WELCOME! REGISTER HERE :</h1>
+            <Input placeholder="Username" value={userName} onChange={(e) => setUserName(e.target.value)} />
             <Input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <Button onClick={handleRegister} className="w-full">Register</Button>
