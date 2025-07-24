@@ -16,14 +16,14 @@ const UserProfile = () => {
         const fetchUserBlogs = async () => {
             try {
                 const res = await getAllBlogs(); // get all blogs
-                const filtered = res.posts.filter((post: Blog) => post.author?._id === user?.id);
+                const filtered = res.posts.filter((post: Blog) => post.author?._id === user?._id);
                 setUserBlogs(filtered);
             } catch (err) {
                 console.error("Failed to fetch user blogs", err);
             }
         };
 
-        if (user?.id) fetchUserBlogs();
+        if (user?._id) fetchUserBlogs();
     }, [user]);
 
     if (!user) return <p className="text-center pt-10">Loading profile...</p>;
