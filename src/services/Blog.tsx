@@ -26,7 +26,7 @@
 
 
 
-import type { createEditPostPayload, PaginatedBlogResponse, postModel } from "../types/Blog";
+import type { Comment, createEditPostPayload, PaginatedBlogResponse, postModel } from "../types/Blog";
 import API from "./Api";
 
 

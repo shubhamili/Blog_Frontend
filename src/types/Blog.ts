@@ -49,6 +49,7 @@ export interface BlogContextType {
     blogs: postModel[];
     setBlogs: (blogs: postModel[]) => void;
     loading: boolean;
+    fetchBlogs: () => Promise<void>;
     createPost: (data: createEditPostPayload) => Promise<postModel>;
     updatePost: (id: string, data: createEditPostPayload) => Promise<postModel>;
     deletePost: (id: string) => Promise<{ message: string }>;

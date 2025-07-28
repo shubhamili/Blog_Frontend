@@ -1,7 +1,6 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useEffect, useState, type ReactNode } from "react";
 import type { AuthContextType, LoginPayload, LoginResponse, RegisterPayload, UserModel } from "../types/Auth";
 import API from "../services/Api";
-//here currently im not using api calls from sevices but here directly. will be following in other contexts
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -14,7 +13,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const fetchUser = async () => {
             try {
                 const response = await API.get("/user/me");
-                setUser(response.data.user)
+                setUser(response.data.userData)
             } catch (error) {
                 setUser(null)
             } finally {
@@ -26,14 +25,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
 
-    // const login = async (data: LoginPayload): Promise<LoginResponse> => {
-    //     const response = await API.post('/user/login', data);
-    //     setUser(response.data.userData)
-    // }
+    const login = async (data: LoginPayload): Promise<LoginResponse> => {
+        const response = await API.post('/user/login', data);
+        setUser(response.data.userData)
+        return response.data;
+    }
 
-    const register = async (data: RegisterPayload) => {
+    const register = async (data: RegisterPayload): Promise<LoginResponse> => {
         const response = await API.post('/user/register', data);
         setUser(response.data.userData)
+        return response.data;
     }
 
 
@@ -51,7 +52,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 isLoading,
                 login,
                 register,
-                logout
+                logout,
             }} >
             {children}
         </AuthContext.Provider>
@@ -59,11 +60,3 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     )
 }
 
-
-export const useAuth = () => {
-    const context_user = useContext(AuthContext);
-    if (!context_user) {
-        throw new Error("useAuth must be used inside AuthProvider");
-    }
-    return context_user;
-}
