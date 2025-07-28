@@ -3,15 +3,19 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import BlogDetail from "../pages/BlogDetail";
+import { ProtectedRoute } from "./ProtectedRoute";
+import PublicRoute from "./PublicRoute";
+import NotFound from "../pages/NotFound";
 
 const AppRoutes = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/blog/:id" element={<BlogDetail />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
+                <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+                <Route path="/blog/:id" element={<ProtectedRoute><BlogDetail /></ProtectedRoute>} />
+                <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+                <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>
     )
