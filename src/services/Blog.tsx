@@ -39,10 +39,15 @@ export const createPost = async (
 };
 
 // Get all blogs (paginated)
-export const getAllBlogs = async (): Promise<PaginatedBlogResponse> => {
-    const res = await API.get("/post/get-all-posts");
-    return res.data;
+export const getAllBlogs = async (
+    page: number = 1,
+    limit: number = 5
+): Promise<PaginatedBlogResponse> => {
+    const res = await API.get(`/post/get-all-posts?page=${page}&limit=${limit}`);
+    return res.data; // Make sure res.data looks like your PaginatedBlogResponse
 };
+
+
 
 // Get detailed blog by ID
 export const getDetailedBlog = async (id: string): Promise<postModel> => {

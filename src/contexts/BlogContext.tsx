@@ -20,16 +20,18 @@ export const BlogProvider = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const fetchBlogs = async () => {
+        setLoading(true);
         try {
-            setLoading(true);
-            const data = await getAllBlogs();
-            setBlogs(data.posts);
-        } catch (error) {
-            console.error("Failed to fetch blogs:", error);
+            const res = await getAllBlogs(1, 5); // or (currentPage, pageSize)
+            setBlogs(res.posts);
+            console.log("✅ Blog API Response:", res);
+
         } finally {
             setLoading(false);
         }
     };
+
+    console.log(blogs);
 
     return (
         <BlogContext.Provider

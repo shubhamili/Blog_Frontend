@@ -1,18 +1,15 @@
-import type { ReactNode } from "react"
-import { useAuth } from "../hooks/UseAuth"
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import MainLayout from "../layouts/MainLayout";
 import Spinner from "../components/Spinner";
 
-const PublicRoute = ({ children }: { children: ReactNode }) => {
-
+const PublicRoute = ({ children }: { children: React.ReactNode }) => {
     const { user, isLoading } = useAuth();
 
-    if (isLoading) return <Spinner />
+    if (isLoading) return <Spinner />; // ✅ spinner before redirect or showing form
+    if (user) return <Navigate to="/" replace />;
 
-    if (user) return <Navigate to="/" replace />
+    return <MainLayout>{children}</MainLayout>;
+};
 
-    return <> {children}</>
-
-}
-
-export default PublicRoute
+export default PublicRoute;

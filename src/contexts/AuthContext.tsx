@@ -13,15 +13,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const fetchUser = async () => {
             try {
                 const response = await API.get("/user/me");
-                setUser(response.data.userData)
-            } catch (error) {
-                setUser(null)
+                setUser(response.data.user);
+            } catch {
+                setUser(null);
             } finally {
-                setIsLoading(false)
+                setIsLoading(false);
             }
-        }
-        fetchUser()
-    }, [])
+        };
+
+        fetchUser();
+    }, []);
 
 
 

@@ -1,14 +1,13 @@
-import { Navigate } from "react-router-dom"; // Keep this for redirect component
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 import MainLayout from "../layouts/MainLayout";
-import { useAuth } from "../hooks/UseAuth";
 import Spinner from "../components/Spinner";
 
 export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-    const { user, isLoading } = useAuth(); // useNavigate() not needed here
+    const { user, isLoading } = useAuth();
 
-    if (isLoading) return <Spinner/>
+    if (isLoading) return <Spinner />; // ✅ Show spinner while fetching /me
+    if (!user) return <Navigate to="/login" replace />;
 
-    if (!user) return <Navigate to="/login" replace />; // this is correct ✅
-
-    return <MainLayout>{children}</MainLayout>; // wrap in layout if needed
+    return <MainLayout>{children}</MainLayout>;
 };

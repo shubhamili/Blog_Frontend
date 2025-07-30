@@ -5,7 +5,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
 
     <>
       <Navbar />
-      <main>{children}</main>
+      <main className="min-h-[calc(100vh-4rem)]">{children}</main>
     </>
   )
 }
