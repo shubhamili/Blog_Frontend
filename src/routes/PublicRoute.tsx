@@ -1,15 +1,15 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import MainLayout from "../layouts/MainLayout";
 import Spinner from "../components/Spinner";
 
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
     const { user, isLoading } = useAuth();
+    console.log("inside publicroute", user, isLoading);
 
-    if (isLoading) return <Spinner />; // ✅ spinner before redirect or showing form
+    if (isLoading) return <Spinner />;
     if (user) return <Navigate to="/" replace />;
 
-    return <MainLayout>{children}</MainLayout>;
-};
+    return <>{children}</>;
+}
 
 export default PublicRoute;

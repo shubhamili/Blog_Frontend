@@ -1,29 +1,3 @@
-// import type { createEditPostPayload, postModel } from "../types/Blog"
-// import API from "./Api"
-
-// export const createPost = async (data: createEditPostPayload): Promise<postModel> => {
-//     const res = await API.post('/post/create', data)
-//     return res.data
-// }
-
-// export const getAllBlogs = async () => { return await API.get('/post/get-all-posts') }
-
-// export const getDetailedBlog = async (id: string) => { return await API.get(`/post/getSinglePost/${id}`) }
-
-// export const getUserPosts = async () => { return await API.get('/post/getUserPosts') }
-
-// export const updatePost = async (id: string, data: createEditPostPayload) => {
-//     return await API.post(`/post/updatePost/${id}`, data)
-// }
-
-// export const deletePost = async (id: string) => { return await API.post(`/post/deletePost/${id}`) }
-
-// export const likePost = async (id: string) => { return await API.post(`/post/likePost/${id}`) }
-
-// export const addComment = async (id: string, comment: string) => {
-//     return await API.post(`/post/addComment/${id}`, { comment })
-// }
-
 
 
 import type { Comment, createEditPostPayload, PaginatedBlogResponse, postModel } from "../types/Blog";
@@ -44,7 +18,7 @@ export const getAllBlogs = async (
     limit: number = 5
 ): Promise<PaginatedBlogResponse> => {
     const res = await API.get(`/post/get-all-posts?page=${page}&limit=${limit}`);
-    return res.data; // Make sure res.data looks like your PaginatedBlogResponse
+    return res.data;
 };
 
 

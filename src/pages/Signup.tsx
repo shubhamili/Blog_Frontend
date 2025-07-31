@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import type { RegisterPayload } from "../types/Auth";
 import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const { register, isLoading } = useAuth();
@@ -19,8 +20,9 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await register(formData);
-    navigate("/login");
+    const res = await register(formData);
+    toast.success(res.message)
+    navigate("/");
   };
 
   return (

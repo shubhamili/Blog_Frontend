@@ -5,8 +5,10 @@ import Spinner from "../components/Spinner";
 
 export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     const { user, isLoading } = useAuth();
+    console.log("inside protectedroute", user, isLoading);
 
-    if (isLoading) return <Spinner />; // ✅ Show spinner while fetching /me
+    if (isLoading) return <Spinner />;
+
     if (!user) return <Navigate to="/login" replace />;
 
     return <MainLayout>{children}</MainLayout>;

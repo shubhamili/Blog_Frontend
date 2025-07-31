@@ -3,10 +3,9 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import BlogDetail from "../pages/BlogDetail";
-// import { ProtectedRoute } from "./ProtectedRoute";
-import PublicRoute from "./PublicRoute";
 import NotFound from "../pages/NotFound";
 import { ProtectedRoute } from "./ProtectedRoute";
+import PublicRoute from "./PublicRoute";
 
 const AppRoutes = () => {
     return (
@@ -28,11 +27,13 @@ const AppRoutes = () => {
                 <Route path="/login" element={
                     <PublicRoute>
                         <Login />
-                    </PublicRoute>} />
+                    </PublicRoute>
+                } />
                 <Route path="/signup" element={
                     <PublicRoute>
                         <Signup />
                     </PublicRoute>
+
                 } />
                 <Route path="*" element={<NotFound />} />
             </Routes>

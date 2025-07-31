@@ -1,9 +1,9 @@
-import AppRoutes from './routes/Index'
+import AppRoutes from './routes/RoutingSetup'
 
 const App = () => {
   return (
     <>
-    
+
       <AppRoutes />
     </>
   )

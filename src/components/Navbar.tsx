@@ -1,15 +1,25 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    logout();
-    navigate("/login");
+    try {
+      const res = await logout()
+      console.log("Logout response", res);
+      if (!res.success) {
+        toast.error(res.message);
+        return;
+      }
+      toast.success(res.message)
+      navigate("/login"); // redirect to login page
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
   };
-
   return (
     <nav className="w-full bg-white shadow-sm py-4 px-6 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
@@ -26,7 +36,7 @@ const Navbar = () => {
                 Hello, {user.userName}
               </span>
               <img
-                src={user.profilePicture}
+                src={user.profilePicture || "https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png"}
                 alt="Profile"
                 className="w-8 h-8 rounded-full object-cover"
               />

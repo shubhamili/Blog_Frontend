@@ -15,7 +15,11 @@ export interface LoginPayload {
 export interface LoginResponse {
     success: boolean;
     message: string;
-    userData: UserModel;
+    user: UserModel;
+}
+export interface LogOutResponse {
+    success: boolean;
+    message: string;
 }
 
 
@@ -33,6 +37,6 @@ export interface AuthContextType {
     isLoading: boolean;
     login: (data: LoginPayload) => Promise<LoginResponse>;
     register: (data: RegisterPayload) => Promise<LoginResponse>;
-    logout: () => void;
+    logout: () => Promise<LogOutResponse>;
 }
 
