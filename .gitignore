@@ -7,19 +7,36 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+dist-ssr/
+
+# Local environment files
+*.local # Catches files like .env.local, .env.development.local, etc.
+.env
+.env.*.local
 
 # Editor directories and files
 .vscode/*
-!.vscode/extensions.json
-.idea
+!.vscode/extensions.json # Keep extensions.json if you want to share recommended extensions
+.idea/
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.env
+Thumbs.db
+
+# Testing
+/coverage/
+
+# Next.js specific (if applicable, though less common with Vite)
+/.next/
+/out/
+
+# Production build (if different from 'dist')
+/build/
+
+# Vercel specific
+.vercel/
