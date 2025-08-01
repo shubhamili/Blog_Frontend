@@ -1,6 +1,6 @@
 
 
-import type { Comment, createEditPostPayload, PaginatedBlogResponse, postModel } from "../types/Blog";
+import type { Comment, CommentResponse, createEditPostPayload, likePostReponse, PaginatedBlogResponse, postModel } from "../types/Blog";
 import API from "./Api";
 
 
@@ -26,7 +26,9 @@ export const getAllBlogs = async (
 // Get detailed blog by ID
 export const getDetailedBlog = async (id: string): Promise<postModel> => {
     const res = await API.get(`/post/getSinglePost/${id}`);
-    return res.data;
+    // console.log("Detailed blog data:", res.data.data);
+    return res.data.data;
+
 };
 
 // Get all blogs created by logged-in user
@@ -53,8 +55,10 @@ export const deletePost = async (id: string): Promise<{ message: string }> => {
 // Like post
 export const likePost = async (
     id: string
-): Promise<{ likes: (string | null)[] }> => {
+): Promise<likePostReponse> => {
     const res = await API.post(`/post/likePost/${id}`);
+    console.log("Like post response:", res.data);
+
     return res.data;
 };
 
@@ -62,7 +66,8 @@ export const likePost = async (
 export const addComment = async (
     id: string,
     comment: string
-): Promise<Comment> => {
+): Promise<CommentResponse> => {
     const res = await API.post(`/post/addComment/${id}`, { comment });
+    console.log("Add comment response:", res.data);
     return res.data;
 };

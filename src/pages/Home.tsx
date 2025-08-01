@@ -20,7 +20,7 @@ const Home = () => {
 
                 {loading ? (
                     <Spinner />
-                ) : blogs.length === 0 ? (
+                ) : blogs?.length === 0 ? (
                     <div className="text-center text-gray-500 mt-16">
                         <p className="text-lg">No blogs available yet.</p>
                         <p className="text-sm mt-1">Create the first blog and share your thoughts!</p>

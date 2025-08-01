@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar"
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
-  console.log("in main layout");
+  // console.log("in main layout");
   
   return (
 

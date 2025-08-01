@@ -11,6 +11,7 @@ import {
     likePost,
     addComment,
     getAllBlogs,
+    getDetailedBlog
 } from "../services/Blog";
 
 export const BlogContext = createContext<BlogContextType | undefined>(undefined);
@@ -24,14 +25,14 @@ export const BlogProvider = ({ children }: { children: ReactNode }) => {
         try {
             const res = await getAllBlogs(1, 5); // or (currentPage, pageSize)
             setBlogs(res.posts);
-            console.log("✅ Blog API Response:", res);
+            // console.log("✅ Blog API Response:", res);
 
         } finally {
             setLoading(false);
         }
     };
 
-    console.log(blogs);
+    // console.log(blogs);
 
     return (
         <BlogContext.Provider
@@ -40,6 +41,7 @@ export const BlogProvider = ({ children }: { children: ReactNode }) => {
                 setBlogs,
                 loading,
                 fetchBlogs,
+                getDetailedBlog,
                 createPost,
                 updatePost,
                 deletePost,

@@ -24,7 +24,7 @@ const Login = () => {
         e.preventDefault();
         try {
             const res = await login(formData);
-            console.log("Login response", res);
+            // console.log("Login response", res);
             if (!res.success) {
                 toast.error(res.message);
                 return;

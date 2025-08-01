@@ -33,7 +33,6 @@ const AppRoutes = () => {
                     <PublicRoute>
                         <Signup />
                     </PublicRoute>
-
                 } />
                 <Route path="*" element={<NotFound />} />
             </Routes>

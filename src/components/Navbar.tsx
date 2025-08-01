@@ -9,7 +9,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       const res = await logout()
-      console.log("Logout response", res);
+      // console.log("Logout response", res);
       if (!res.success) {
         toast.error(res.message);
         return;

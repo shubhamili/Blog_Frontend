@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const [isLoading, setIsLoading] = useState(true);
 
-    console.log("hello from authcontext", user);
+    // console.log("hello from authcontext", user);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
             const res = await API.post("user/logout");
             setUser(null);
-            console.log("logout", res.data);
+            // console.log("logout", res.data);
             return res.data;
         } catch (err) {
             console.error("Logout failed", err);
