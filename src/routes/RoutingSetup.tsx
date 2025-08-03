@@ -6,6 +6,8 @@ import BlogDetail from "../pages/BlogDetail";
 import NotFound from "../pages/NotFound";
 import { ProtectedRoute } from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
+import CreatePost from "../pages/CreatePage";
+import Profile from "../pages/Profile";
 
 const AppRoutes = () => {
     return (
@@ -14,6 +16,16 @@ const AppRoutes = () => {
             v7_startTransition: true,
         }}>
             <Routes>
+                <Route path="/login" element={
+                    <PublicRoute>
+                        <Login />
+                    </PublicRoute>
+                } />
+                <Route path="/signup" element={
+                    <PublicRoute>
+                        <Signup />
+                    </PublicRoute>
+                } />
                 <Route path="/" element={
                     <ProtectedRoute>
                         <Home />
@@ -24,15 +36,15 @@ const AppRoutes = () => {
                         <BlogDetail />
                     </ProtectedRoute>
                 } />
-                <Route path="/login" element={
-                    <PublicRoute>
-                        <Login />
-                    </PublicRoute>
+                <Route path="/create" element={
+                    <ProtectedRoute>
+                        <CreatePost />
+                    </ProtectedRoute>
                 } />
-                <Route path="/signup" element={
-                    <PublicRoute>
-                        <Signup />
-                    </PublicRoute>
+                <Route path="/profile" element={
+                    <ProtectedRoute>
+                        <Profile />
+                    </ProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />
             </Routes>

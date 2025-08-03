@@ -4,6 +4,9 @@ export interface UserModel {
     userName: string;
     email: string;
     profilePicture: string;
+    createdAt: string;
+    updatedAt: string;
+    __v?: number;
 }
 
 export interface LoginPayload {

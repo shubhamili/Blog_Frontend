@@ -24,15 +24,18 @@ const Login = () => {
         e.preventDefault();
         try {
             const res = await login(formData);
-            // console.log("Login response", res);
+            console.log("Login response", res);
             if (!res.success) {
-                toast.error(res.message);
+                console.log("Login failed", res);
+
+                toast.error("Login failed!");
                 return;
             }
-            toast.success(res.message || "Login successful!");
+            toast.success(res.success || "Login successful!");
             navigate("/");
         } catch (err: any) {
-            const message = err?.response?.data?.message || err?.message || "Login failed!";
+            console.error("Login error", err);
+            const message = err?.response.data.msg || "Login failed!";
             toast.error(message);
         }
 

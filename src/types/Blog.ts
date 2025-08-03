@@ -1,6 +1,6 @@
 export interface createEditPostPayload {
     content: string;
-    postPicture: File;
+    postPicture: File | null;
 }
 
 export interface getPostById {
@@ -20,7 +20,7 @@ export interface Author {
 export interface Comment {
     _id: string;
     user: Author;
-    content: string;
+    comment: string;
     createdAt: string;
 }
 
@@ -30,7 +30,7 @@ export interface postModel {
     content: string;
     postPicture: string;
     postPicturePublicID: string;
-    likes: (Author | null)[];
+    likes: string[];
     comments: Comment[];
     createdAt: string;
     updatedAt: string;
@@ -58,13 +58,6 @@ export interface CommentUser {
     profilePicture: string;
 }
 
-// export interface Comment {
-//     _id: string;
-//     user: CommentUser;
-//     comment: string;
-//     createdAt: string;
-// }
-
 export interface UpdatedPost {
     _id: string;
     author: string;
@@ -88,15 +81,30 @@ export interface CommentResponse {
     updatedPost: UpdatedPost;
 }
 
+export interface createPostResponse {
+    success: boolean;
+    message: string;
+    data: postModel;
+}
+
+export interface userProfilePostsResponse {
+    success: boolean;
+    message: string;
+    data: postModel[];
+}
+
+
+
 export interface BlogContextType {
     blogs: postModel[];
     setBlogs: (blogs: postModel[]) => void;
     loading: boolean;
     getDetailedBlog: (id: string) => Promise<postModel | null>;
     fetchBlogs: () => Promise<void>;
-    createPost: (data: createEditPostPayload) => Promise<postModel>;
+    createPost: (data: FormData) => Promise<createPostResponse>;
     updatePost: (id: string, data: createEditPostPayload) => Promise<postModel>;
     deletePost: (id: string) => Promise<{ message: string }>;
     likePost: (id: string) => Promise<likePostReponse>;
-    addComment: (id: string, comment: string) => Promise<Comment>;
+    addComment: (id: string, comment: string) => Promise<CommentResponse>;
+    getProfilePosts: () => Promise<userProfilePostsResponse>;
 }

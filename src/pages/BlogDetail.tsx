@@ -1,165 +1,12 @@
-// import { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
-// import Spinner from "../components/Spinner";
-// import type { postModel, Comment } from "../types/Blog";
-// import { addComment, getDetailedBlog, likePost } from "../services/Blog";
-
-// const BlogDetail = () => {
-//   const { id } = useParams();
-//   const [blog, setBlog] = useState<postModel | null>(null);
-//   const [loading, setLoading] = useState(true);
-//   const [commentText, setCommentText] = useState("");
-
-
-//   useEffect(() => {
-//     if (!id) {
-//       console.error("No blog ID provided in URL parameters.");
-//       return;
-//     }
-//     const fetchBlog = async () => {
-//       if (!id) return;
-//       try {
-//         setLoading(true);
-//         const res = await getDetailedBlog(id);
-//         setBlog(res);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchBlog();
-//   }, [id]);
-//   // console.log("Fetched blog:", blog);
-//   useEffect(() => {
-//     if (blog) {
-//       console.log("Fetched blog:", blog);
-//     }
-//   }, [blog]);
-
-//   const handleLike = async () => {
-//     if (!id) return;
-//     const response = await likePost(id);
-//     setBlog((prev) =>
-//       prev ? { ...prev, likes: response?.likes?.length as any } : prev
-//     );
-//   };
-
-//   const handleComment = async () => {
-//     if (!id || !commentText.trim()) return;
-//     const newComment: Comment = await addComment(id, commentText);
-//     setBlog((prev) =>
-//       prev ? { ...prev, comments: [...prev.comments, newComment] } : prev
-//     );
-//     setCommentText("");
-//   };
-
-
-
-//   if (loading) return <Spinner />;
-
-//   if (!blog) return <p className="text-center mt-10 text-gray-600">Blog not found.</p>;
-
-//   const formatDate = (date: string) =>
-//     new Date(date).toLocaleDateString("en-US", {
-//       year: "numeric",
-//       month: "short",
-//       day: "numeric",
-//     });
-
-//   return (
-//     <div className="max-w-3xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg">
-//       <div className="flex items-center mb-4">
-//         <img
-//           src={blog?.author?.profilePicture || 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png'}
-//           alt="Author"
-//           className="w-12 h-12 rounded-full mr-4"
-//         />
-//         <div>
-//           <h2 className="text-xl font-semibold">{blog?.author?.email ?? "authorEmail"}</h2>
-//           <p className="text-sm text-gray-500">{formatDate(blog.createdAt)}</p>
-//         </div>
-//       </div>
-
-//       {blog?.postPicture && (
-//         <img
-//           src={blog?.postPicture}
-//           alt="Post"
-//           className="w-full h-64 object-contain rounded-lg mb-4"
-//         />
-//       )}
-
-//       <p className="text-gray-700 mb-4">{blog.content}</p>
-
-//       <div className="flex justify-between items-center mb-4">
-//         <button
-//           onClick={handleLike}
-//           className="text-blue-600 hover:underline"
-//         >
-//           ❤️ {blog?.likes?.length || '0'} Likes
-//         </button>
-//         {blog.updatedAt !== blog.createdAt && (
-//           <span className="text-sm text-gray-500">
-//             Edited: {formatDate(blog.updatedAt)}
-//           </span>
-//         )}
-//       </div>
-
-//       <div className="mt-6 border-t pt-4">
-//         <h3 className="text-lg font-semibold mb-2">Comments</h3>
-
-//         {blog.comments.length === 0 ? (
-//           <p className="text-sm text-gray-500">No comments yet.</p>
-//         ) : (
-//           blog.comments.map((comment) => (
-//             <div key={comment._id} className="mb-4">
-//               <div className="flex items-center mb-1">
-//                 <img
-//                   src={comment.user.profilePicture}
-//                   alt="User"
-//                   className="w-8 h-8 rounded-full mr-2"
-//                 />
-//                 <div>
-//                   <p className="text-sm font-medium">
-//                     {comment.user.email}
-//                   </p>
-//                   <p className="text-xs text-gray-400">
-//                     {formatDate(comment.createdAt)}
-//                   </p>
-//                 </div>
-//               </div>
-//               <p className="ml-10 text-gray-600">{comment.content}</p>
-//             </div>
-//           ))
-//         )}
-
-//         <div className="mt-4">
-//           <textarea
-//             className="w-full border p-2 rounded resize-none"
-//             rows={2}
-//             value={commentText}
-//             onChange={(e) => setCommentText(e.target.value)}
-//             placeholder="Write a comment..."
-//           />
-//           <button
-//             onClick={handleComment}
-//             className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-//           >
-//             Add Comment
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default BlogDetail;
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Heart, MessageCircle, Calendar, Edit3, User, ArrowLeft } from "lucide-react";
 import Spinner from "../components/Spinner";
-import type { postModel, Comment } from "../types/Blog";
+import type { postModel } from "../types/Blog";
 import { addComment, getDetailedBlog, likePost } from "../services/Blog";
+import { useAuth } from "../hooks/useAuth";
+import { formatDate } from "../services/utilServices";
 
 const BlogDetail = () => {
   const { id } = useParams();
@@ -168,6 +15,7 @@ const BlogDetail = () => {
   const [commentText, setCommentText] = useState("");
   const [isLiked, setIsLiked] = useState(false);
   const [showAllComments, setShowAllComments] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!id) {
@@ -179,6 +27,8 @@ const BlogDetail = () => {
       try {
         setLoading(true);
         const res = await getDetailedBlog(id);
+        // console.log("Fetched user:", user);
+        // Replace with actual user ID
         setBlog(res);
       } finally {
         setLoading(false);
@@ -190,7 +40,15 @@ const BlogDetail = () => {
 
   useEffect(() => {
     if (blog) {
-      console.log("Fetched blog:", blog);
+      // console.log("Current user:------------------------------------", user);
+      // setIsLiked(user?._id ? blog.likes?.includes(user._id) ?? false : false);
+      if (user && user._id) {
+        setIsLiked(blog.likes?.includes(user._id) ?? false);
+      } else {
+        setIsLiked(false);
+      }
+
+
     }
   }, [blog]);
 
@@ -220,6 +78,10 @@ const BlogDetail = () => {
     setCommentText("");
   };
 
+  // console.log("Blog =======>:", blog);
+
+  const visibleComments = showAllComments ? blog?.comments : blog?.comments.slice(0, 3);
+  // console.log("Visible comments:", visibleComments);
 
   if (loading) return <Spinner />;
 
@@ -245,32 +107,14 @@ const BlogDetail = () => {
     );
   }
 
-  const formatDate = (date: string) => {
-    const now = new Date();
-    const postDate = new Date(date);
-    const diffInHours = Math.floor((now.getTime() - postDate.getTime()) / (1000 * 60 * 60));
 
-    if (diffInHours < 24) {
-      return `${diffInHours}h ago`;
-    } else if (diffInHours < 168) {
-      return `${Math.floor(diffInHours / 24)}d ago`;
-    } else {
-      return postDate.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      });
-    }
-  };
-
-  const visibleComments = showAllComments ? blog.comments : blog.comments.slice(0, 3);
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navigation */}
       <div className="bg-white border-b sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 py-4">
-          <button className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors group">
+          <button className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors group" onClick={() => window.history.back()}>
             <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
             Back to Blog
           </button>
@@ -286,7 +130,7 @@ const BlogDetail = () => {
               <img
                 src={blog.postPicture}
                 alt="Post cover"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
               />
             </div>
           )}
@@ -397,7 +241,7 @@ const BlogDetail = () => {
             </div>
           ) : (
             <div className="space-y-6">
-              {visibleComments.map((comment, index) => (
+              {visibleComments?.map((comment, index) => (
                 <div key={index} className="flex space-x-4 group">
                   <img
                     src={comment?.user?.profilePicture || 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png'}
@@ -414,7 +258,7 @@ const BlogDetail = () => {
                           {formatDate(comment.createdAt)}
                         </span>
                       </div>
-                      <p className="text-gray-700 leading-relaxed">{comment?.content || "comment not available"}</p>
+                      <p className="text-gray-700 leading-relaxed">{comment?.comment || "comment not available"}</p>
                     </div>
                   </div>
                 </div>

@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const fetchUser = async () => {
             try {
                 const response = await API.get("/user/me");
+                console.log("Fetched user data:", response.data.user);
                 setUser(response.data.user);
             } catch {
                 setUser(null);
@@ -30,7 +31,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
     const login = async (data: LoginPayload): Promise<LoginResponse> => {
+        console.log("login data", data);
         const response = await API.post('/user/login', data);
+        console.log("login response ====================>", response);
         if (!response.data.success) {
             return response.data;
         }
