@@ -6,8 +6,8 @@ import BlogDetail from "../pages/BlogDetail";
 import NotFound from "../pages/NotFound";
 import { ProtectedRoute } from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
-import CreatePost from "../pages/CreatePage";
 import Profile from "../pages/Profile";
+import PostForm from "../pages/PostForm";
 
 const AppRoutes = () => {
     return (
@@ -38,7 +38,12 @@ const AppRoutes = () => {
                 } />
                 <Route path="/create" element={
                     <ProtectedRoute>
-                        <CreatePost />
+                        <PostForm />
+                    </ProtectedRoute>
+                } />
+                <Route path="/edit/:id" element={
+                    <ProtectedRoute>
+                        <PostForm />
                     </ProtectedRoute>
                 } />
                 <Route path="/profile" element={

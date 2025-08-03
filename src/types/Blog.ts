@@ -102,7 +102,7 @@ export interface BlogContextType {
     getDetailedBlog: (id: string) => Promise<postModel | null>;
     fetchBlogs: () => Promise<void>;
     createPost: (data: FormData) => Promise<createPostResponse>;
-    updatePost: (id: string, data: createEditPostPayload) => Promise<postModel>;
+    updatePost: (id: string, data: FormData) => Promise<createPostResponse>;
     deletePost: (id: string) => Promise<{ message: string }>;
     likePost: (id: string) => Promise<likePostReponse>;
     addComment: (id: string, comment: string) => Promise<CommentResponse>;

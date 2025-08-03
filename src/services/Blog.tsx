@@ -1,6 +1,6 @@
 
 
-import type { CommentResponse, createEditPostPayload, createPostResponse, likePostReponse, PaginatedBlogResponse, postModel, userProfilePostsResponse } from "../types/Blog";
+import type { CommentResponse, createPostResponse, likePostReponse, PaginatedBlogResponse, postModel, userProfilePostsResponse } from "../types/Blog";
 import API from "./Api";
 
 
@@ -40,15 +40,15 @@ export const getUserPosts = async (): Promise<postModel[]> => {
 // Update blog post
 export const updatePost = async (
     id: string,
-    data: createEditPostPayload
-): Promise<postModel> => {
-    const res = await API.post(`/post/updatePost/${id}`, data);
+    data: FormData
+): Promise<createPostResponse> => {
+    const res = await API.put(`/post/updatePost/${id}`, data);
     return res.data;
 };
 
 // Delete post
-export const deletePost = async (id: string): Promise<{ message: string }> => {
-    const res = await API.post(`/post/deletePost/${id}`);
+export const deletePost = async (id: string): Promise<createPostResponse> => {
+    const res = await API.delete(`/post/deletePost/${id}`);
     return res.data;
 };
 
@@ -76,10 +76,13 @@ export const addComment = async (
 
 
 export const getProfilePosts = async (): Promise<userProfilePostsResponse> => {
+    console.log("Fetching user profile posts...");
+
     const res = await API.get(`/post/getUserPosts`);
-    console.log("Fetched user profile posts:", res.data.posts);
+
+    console.log("Fetched user profile posts:", res.data.data);
     if (!res.data.success) {
         throw new Error(res.data.message || "Failed to fetch user posts");
     }
-    return res.data.posts;
+    return res.data;
 }

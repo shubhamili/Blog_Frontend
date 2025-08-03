@@ -5,7 +5,7 @@ import type { RegisterPayload } from "../types/Auth";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 
-const Signup = () => {
+const Signup: React.FC = () => {
   const { register, isLoading } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<RegisterPayload>({
@@ -20,59 +20,76 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await register(formData);
-    toast.success(res.message)
-    navigate("/");
+    try {
+      const res = await register(formData);
+      if (res.success) {
+        toast.success(res.message || "Registration successful!");
+        navigate("/");
+      } else {
+        toast.error(res.message || "Registration failed!");
+      }
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Registration failed!");
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="max-w-md w-full bg-white shadow-md rounded-lg p-8">
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Sign Up</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12">
+      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6 sm:p-8">
+        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6 tracking-tight">
+          Sign Up
+        </h2>
 
         {isLoading ? (
           <Spinner />
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              name="userName"
-              required
-              placeholder="Username"
-              value={formData.userName}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-            />
-            <input
-              type="email"
-              name="email"
-              required
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-            />
-            <input
-              type="password"
-              name="password"
-              required
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-            />
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <input
+                type="text"
+                name="userName"
+                required
+                placeholder="Username"
+                value={formData.userName}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700 text-sm transition-all duration-200"
+              />
+            </div>
+            <div>
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700 text-sm transition-all duration-200"
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                name="password"
+                required
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700 text-sm transition-all duration-200"
+              />
+            </div>
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+              disabled={isLoading}
+              className="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-indigo-600 transition-all duration-200 text-sm font-medium shadow-sm hover:shadow-md disabled:bg-indigo-300 disabled:cursor-not-allowed"
             >
-              Register
+              {isLoading ? "Registering..." : "Register"}
             </button>
           </form>
         )}
 
-        <p className="text-center text-sm mt-4 text-gray-600">
+        <p className="text-center text-sm mt-5 text-gray-600">
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-500 hover:underline">
+          <Link to="/login" className="text-indigo-500 hover:underline font-medium">
             Login
           </Link>
         </p>
