@@ -25,7 +25,7 @@ const BlogCard: React.FC<Props> = ({ post }) => {
                     className="w-10 h-10 rounded-2xl object-cover"
                 />
                 <div>
-                    <p className="font-medium">{post?.author?.email ?? "authorEmail"}</p>
+                    <p className="font-medium">{post?.author?.userName ?? "authorEmail"}</p>
                     <p className="text-sm text-gray-500">
                         {new Date(post.createdAt).toLocaleDateString()}
                     </p>
