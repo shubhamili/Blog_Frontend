@@ -19,7 +19,7 @@ A full-stack blog platform built with the **MERN stack** (MongoDB, Express.js, R
 - Create, update, delete posts  
 - Like and comment on posts  
 - Image uploads via Cloudinary  
-- Clean UI with Tailwind (AI generated)  
+- Clean UI with Tailwind (AI generated Design)  
 
 ---
 
