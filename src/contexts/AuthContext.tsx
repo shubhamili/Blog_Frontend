@@ -2,32 +2,42 @@ import { createContext, useEffect, useState, type ReactNode } from "react";
 import type { AuthContextType, LoginPayload, LoginResponse, LogOutResponse, RegisterPayload, UserModel } from "../types/Auth";
 import API from "../services/Api";
 import { toast } from "react-toastify";
+import { setAccessToken as setAxiosToken } from "../services/Api";
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const [user, setUser] = useState<UserModel | null>(null);
-
+    const [accessToken, setAccessToken] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    // console.log("hello from authcontext", user);
-
     useEffect(() => {
-        const fetchUser = async () => {
+        const refreshAccessToken = async () => {
             try {
-                const response = await API.get("/user/me");
+                const response = await API.get("/user/refreshAccessToken");
                 console.log("Fetched user data:", response.data.user);
+                setAccessToken(response.data.accessToken || null);
                 setUser(response.data.user);
             } catch {
                 setUser(null);
+                setAccessToken(null);
+                console.error("Failed to refresh access token");
             } finally {
                 setIsLoading(false);
             }
         };
-        fetchUser();
+        refreshAccessToken();
+
     }, []);
 
+    useEffect(() => {
+        if (accessToken) {
+            setAxiosToken(accessToken);
+        } else {
+            setAxiosToken("");
+        }
+    }, [accessToken]);
 
 
     const login = async (data: LoginPayload): Promise<LoginResponse> => {
@@ -38,6 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             return response.data;
         }
         setUser(response.data.user)
+        setAccessToken(response.data.user.accessToken || null);
         return response.data;
     }
 
@@ -47,6 +58,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             return response.data;
         }
         setUser(response.data.user);
+        setAccessToken(response.data.user.accessToken || null);
         return response.data;
     }
 
@@ -54,7 +66,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
             const res = await API.post("user/logout");
             setUser(null);
-            // console.log("logout", res.data);
+            setAccessToken(null);
+            console.log("logout", res.data);
             return res.data;
         } catch (err) {
             console.error("Logout failed", err);
@@ -73,6 +86,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         <AuthContext.Provider value={
             {
                 user,
+                accessToken,
                 setUser,
                 isLoading,
                 login,

@@ -4,6 +4,7 @@ export interface UserModel {
     userName: string;
     email: string;
     profilePicture: string;
+    accessToken?: string;
     createdAt: string;
     updatedAt: string;
     __v?: number;
@@ -36,6 +37,7 @@ export interface RegisterPayload {
 
 export interface AuthContextType {
     user: UserModel | null;
+    accessToken: string | null;
     setUser: (user: UserModel | null) => void;
     isLoading: boolean;
     login: (data: LoginPayload) => Promise<LoginResponse>;

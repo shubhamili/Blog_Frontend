@@ -3,11 +3,11 @@ import { useAuth } from "../hooks/useAuth";
 import Spinner from "../components/Spinner";
 
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-    const { user, isLoading } = useAuth();
+    const { user, isLoading, accessToken } = useAuth();
     // console.log("inside publicroute", user, isLoading);
 
     if (isLoading) return <Spinner />;
-    if (user) return <Navigate to="/" replace />;
+    if (user || accessToken) return <Navigate to="/" replace />;
 
     return <>{children}</>;
 }
