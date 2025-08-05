@@ -1,19 +1,19 @@
-// api.ts
+
+
 import axios from "axios";
 
 const API = axios.create({
     baseURL: import.meta.env.VITE_BACKEND_URI,
-    withCredentials: true,
+    withCredentials: true, // so the refreshToken cookie is sent
 });
 
-// ✅ Token container (set by your app once on load)
+// Inject access token into request headers
 let currentAccessToken = "";
 
-export const setAccessToken = (token: string) => {
+export const updateAccessToken = (token: string) => {
     currentAccessToken = token;
 };
 
-// ✅ Add token to every request
 API.interceptors.request.use(
     (config) => {
         if (currentAccessToken) {
@@ -24,7 +24,7 @@ API.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-// ✅ Handle token expiry and refresh
+// Handle expired access token automatically
 API.interceptors.response.use(
     (res) => res,
     async (err) => {
@@ -33,19 +33,19 @@ API.interceptors.response.use(
         if (err.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
-                const res = await axios.post(
-                    "/api/user/refresh",
-                    {},
+                const res = await axios.get(
+                    `${import.meta.env.VITE_BACKEND_URI}/user/refreshAccessToken`,
                     { withCredentials: true }
                 );
 
                 const newAccessToken = res.data.accessToken;
-                setAccessToken(newAccessToken); // update the token in memory
-
+                updateAccessToken(newAccessToken); // update in memory
                 originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-                return API(originalRequest);
+
+                return API(originalRequest); // retry original request
             } catch (refreshError) {
-                console.log("Refresh failed — user may be logged out");
+                console.error("Refresh token failed");
+                // Optionally trigger logout from here
             }
         }
 
@@ -54,3 +54,4 @@ API.interceptors.response.use(
 );
 
 export default API;
+

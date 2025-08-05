@@ -2,7 +2,7 @@ import { createContext, useEffect, useState, type ReactNode } from "react";
 import type { AuthContextType, LoginPayload, LoginResponse, LogOutResponse, RegisterPayload, UserModel } from "../types/Auth";
 import API from "../services/Api";
 import { toast } from "react-toastify";
-import { setAccessToken as setAxiosToken } from "../services/Api";
+import { updateAccessToken as setAxiosToken } from "../services/Api";
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
