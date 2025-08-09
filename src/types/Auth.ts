@@ -1,13 +1,15 @@
 
 export interface UserModel {
-    _id: string;
+    id: string;
     userName: string;
     email: string;
-    profilePicture: string;
+    bio?: string;
+    location?: string;
+    website?: string;
+    profilePicture?: string;
     accessToken?: string;
     createdAt: string;
     updatedAt: string;
-    __v?: number;
 }
 
 export interface LoginPayload {
@@ -34,6 +36,11 @@ export interface RegisterPayload {
     password: string;
 }
 
+export interface updateProfileResponse {
+    success: boolean;
+    message: string;
+    user?: UserModel;
+}
 
 export interface AuthContextType {
     user: UserModel | null;
@@ -43,5 +50,6 @@ export interface AuthContextType {
     login: (data: LoginPayload) => Promise<LoginResponse>;
     register: (data: RegisterPayload) => Promise<LoginResponse>;
     logout: () => Promise<LogOutResponse>;
+    updateProfile: (data: FormData) => Promise<updateProfileResponse>;
 }
 

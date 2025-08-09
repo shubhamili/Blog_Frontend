@@ -42,8 +42,8 @@ const BlogDetail = () => {
     if (blog) {
       // console.log("Current user:------------------------------------", user);
       // setIsLiked(user?._id ? blog.likes?.includes(user._id) ?? false : false);
-      if (user && user._id) {
-        setIsLiked(blog.likes?.includes(user._id) ?? false);
+      if (user && user.id) {
+        setIsLiked(blog.likes?.includes(user.id) ?? false);
       } else {
         setIsLiked(false);
       }

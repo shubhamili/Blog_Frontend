@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import type { AuthContextType, LoginPayload, LoginResponse, LogOutResponse, RegisterPayload, UserModel } from "../types/Auth";
+import type { AuthContextType, LoginPayload, LoginResponse, LogOutResponse, RegisterPayload, updateProfileResponse, UserModel } from "../types/Auth";
 import API from "../services/Api";
 import { toast } from "react-toastify";
 import { updateAccessToken as setAxiosToken } from "../services/Api";
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 const response = await API.get("/user/refreshAccessToken");
                 console.log("Fetched user data:", response.data.user);
                 setAccessToken(response.data.accessToken || null);
-                setUser(response.data.user);
+                setUser(response.data.user || null);
             } catch {
                 setUser(null);
                 setAccessToken(null);
@@ -79,6 +79,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const updateProfile = async (data: FormData): Promise<updateProfileResponse> => {
+        try {
+            const res = await API.put("/user/update", data);
+            console.log("Update profile response:", res.data);
+            if (!res.data.success) {
+                // toast.error(res.data.message || "Failed to update profile");
+                return res.data;
+            }
+            setUser(res.data.user);
+            return res.data;
+
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            // toast.error("Failed to update profile");
+            return {
+                success: false,
+                message: "An error occurred while updating profile",
+            };
+        }
+    };
+
 
 
 
@@ -91,6 +112,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 isLoading,
                 login,
                 register,
+                updateProfile,
                 logout,
             }} >
             {children}

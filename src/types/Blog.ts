@@ -1,6 +1,6 @@
 export interface createEditPostPayload {
     content: string;
-    postPicture: File | null;
+    postPicture: string | File | null; // Updated to allow string for image URL or File object
 }
 
 export interface getPostById {
