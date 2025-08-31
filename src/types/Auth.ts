@@ -84,6 +84,28 @@ export interface followToggleResponse {
     data: followAuther;
 }
 
+export interface getNotificationsResponse {
+    success: boolean;
+    message: string;
+    data: string[];
+}
+
+// export interface Notification {
+//     _id: string;
+//     type: 'like' | 'comment' | 'follow';
+//     message: string;
+//     createdAt: string;
+//     read: boolean;
+//     fromUser?: {
+//         _id: string;
+//         userName: string;
+//         profilePicture: string;
+//     };
+//     post?: {
+//         _id: string;
+//         content: string;
+//     };
+// }
 
 
 
@@ -99,5 +121,6 @@ export interface AuthContextType {
     getFollows: (id: string) => Promise<followerResponse>;
     reqProfile: (profileId: string) => Promise<reqProfileResponse>;
     followToggle: (authorId: string) => Promise<followToggleResponse>;
+    getNotifications: () => Promise<getNotificationsResponse>;
 }
 

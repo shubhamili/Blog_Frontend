@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import type { AuthContextType, followerResponse, followToggleResponse, LoginPayload, LoginResponse, LogOutResponse, RegisterPayload, reqProfileResponse, updateProfileResponse, UserModel } from "../types/Auth";
+import type { AuthContextType, followerResponse, followToggleResponse, getNotificationsResponse, LoginPayload, LoginResponse, LogOutResponse, RegisterPayload, reqProfileResponse, updateProfileResponse, UserModel } from "../types/Auth";
 import API from "../services/Api";
 import { toast } from "react-toastify";
 import { updateAccessToken as setAxiosToken } from "../services/Api";
@@ -7,7 +7,6 @@ import { updateAccessToken as setAxiosToken } from "../services/Api";
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-
     const [user, setUser] = useState<UserModel | null>(null);
     const [accessToken, setAccessToken] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -132,6 +131,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const getNotifications = async (): Promise<getNotificationsResponse> => {
+        try {
+            const res = await API.get("/user/notification");
+            return res.data;
+        } catch (err) {
+            console.error("Error fetching notifications:", err);
+            throw err;
+        }
+    };
+
 
 
     return (
@@ -147,7 +156,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 logout,
                 getFollows,
                 reqProfile,
-                followToggle
+                followToggle,
+                getNotifications
             }} >
             {children}
         </AuthContext.Provider>

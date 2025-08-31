@@ -10,6 +10,7 @@ import Profile from "../pages/Profile";
 import PostForm from "../pages/PostForm";
 import UpdateProfile from "../pages/UpdatdProfile";
 import UserProfile from "../pages/UserProfile";
+// import NotificationsPage from "../pages/Notification";
 
 const AppRoutes = () => {
     return (
@@ -63,6 +64,11 @@ const AppRoutes = () => {
                         <UserProfile />
                     </ProtectedRoute>
                 } />
+                {/* <Route path="/all-notifications" element={
+                    <ProtectedRoute>
+                        <NotificationsPage />
+                    </ProtectedRoute>
+                } /> */}
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>
