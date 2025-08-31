@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import type { AuthContextType, followerResponse, LoginPayload, LoginResponse, LogOutResponse, RegisterPayload, reqProfileResponse, updateProfileResponse, UserModel } from "../types/Auth";
+import type { AuthContextType, followerResponse, followToggleResponse, LoginPayload, LoginResponse, LogOutResponse, RegisterPayload, reqProfileResponse, updateProfileResponse, UserModel } from "../types/Auth";
 import API from "../services/Api";
 import { toast } from "react-toastify";
 import { updateAccessToken as setAxiosToken } from "../services/Api";
@@ -122,6 +122,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const followToggle = async (authorId: string): Promise<followToggleResponse> => {
+        try {
+            const res = await API.post(`/user/follow-toggle/${authorId}`);
+            return res.data;
+        } catch (err) {
+            console.error("Error toggling follow:", err);
+            throw err;
+        }
+    };
+
+
 
     return (
         <AuthContext.Provider value={
@@ -135,7 +146,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 updateProfile,
                 logout,
                 getFollows,
-                reqProfile
+                reqProfile,
+                followToggle
             }} >
             {children}
         </AuthContext.Provider>

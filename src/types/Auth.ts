@@ -78,6 +78,12 @@ export interface ProfileData {
     userPosts: postModel[];
 }
 
+export interface followToggleResponse {
+    success: boolean;
+    message: string;
+    data: followAuther;
+}
+
 
 
 
@@ -92,6 +98,6 @@ export interface AuthContextType {
     updateProfile: (data: FormData) => Promise<updateProfileResponse>;
     getFollows: (id: string) => Promise<followerResponse>;
     reqProfile: (profileId: string) => Promise<reqProfileResponse>;
-
+    followToggle: (authorId: string) => Promise<followToggleResponse>;
 }
 
