@@ -80,9 +80,9 @@ export const getProfilePosts = async (): Promise<userProfilePostsResponse> => {
 
     const res = await API.get(`/post/getUserPosts`);
 
-    console.log("Fetched user profile posts:", res.data.data);
     if (!res.data.success) {
         throw new Error(res.data.message || "Failed to fetch user posts");
     }
     return res.data;
 }
+

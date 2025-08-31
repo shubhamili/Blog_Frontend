@@ -5,10 +5,12 @@ import { useAuth } from "../hooks/useAuth";
 import { getProfilePosts, deletePost } from "../services/Blog";
 import type { postModel } from "../types/Blog";
 import { Link, useNavigate } from "react-router-dom";
+import type { followerResponse } from "../types/Auth";
 
 const Profile: React.FC = () => {
-    const { user,  } = useAuth();
+    const { user, getFollows } = useAuth();
     const [posts, setPosts] = useState<postModel[]>([]);
+    const [follows, setFollows] = useState<followerResponse>();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string>("");
     const [activeTab, setActiveTab] = useState<'posts' | 'about'>('posts');
@@ -19,9 +21,7 @@ const Profile: React.FC = () => {
     useEffect(() => {
         const fetchUserPosts = async () => {
             try {
-                console.log("Fetching user posts for:", user?.id || user?.email);
                 const res = await getProfilePosts();
-                console.log("Fetched user posts:", res.data);
                 setPosts(res.data || []);
             } catch (err: any) {
                 setError("Failed to fetch posts");
@@ -29,11 +29,14 @@ const Profile: React.FC = () => {
                 setLoading(false);
             }
         };
-
+        const getFollowers = async () => {
+            const res = await getFollows(user?.id || "");
+            setFollows(res);
+        }
         fetchUserPosts();
+        getFollowers();
     }, []);
 
-    console.log("User posts:", posts);
 
     const formatDate = (dateString: string): string => {
         return new Date(dateString).toLocaleDateString('en-US', {
@@ -47,7 +50,6 @@ const Profile: React.FC = () => {
 
     const handleEditPost = async (postId: string) => {
         try {
-            console.log("Editing post:", postId);
             navigate(`/edit/${postId}`);
         } catch (err: any) {
             setError("Failed to edit post");
@@ -59,7 +61,6 @@ const Profile: React.FC = () => {
             try {
                 await deletePost(postToDelete);
                 setPosts(posts.filter(post => post._id !== postToDelete));
-                console.log("Deleted post:", postToDelete);
             } catch (err: any) {
                 setError("Failed to delete post");
             } finally {
@@ -167,6 +168,14 @@ const Profile: React.FC = () => {
                                 <div className="text-xs text-gray-500">Posts</div>
                             </div>
                             <div className="text-center">
+                                <div className="text-lg font-semibold text-gray-800">{follows?.data?.followersCount || 0}</div>
+                                <div className="text-xs text-gray-500">Follower</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-lg font-semibold text-gray-800">{follows?.data?.followingCount || 0}</div>
+                                <div className="text-xs text-gray-500">Following</div>
+                            </div>
+                            {/* <div className="text-center">
                                 <div className="text-lg font-semibold text-gray-800">
                                     {user?.createdAt ? new Date(user.createdAt).getFullYear() : '2024'}
                                 </div>
@@ -175,7 +184,7 @@ const Profile: React.FC = () => {
                             <div className="text-center">
                                 <div className="text-lg font-semibold text-green-500">Active</div>
                                 <div className="text-xs text-gray-500">Status</div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
@@ -190,9 +199,9 @@ const Profile: React.FC = () => {
                             </svg>
                             New Post
                         </Link>
-                        <button 
-                        onClick={() => navigate('/profile/update')}
-                        className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-all duration-200 text-sm font-medium flex items-center gap-2">
+                        <button
+                            onClick={() => navigate('/profile/update')}
+                            className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-all duration-200 text-sm font-medium flex items-center gap-2">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>

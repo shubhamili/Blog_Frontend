@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Heart, MessageCircle, Calendar, Edit3, User, ArrowLeft } from "lucide-react";
 import Spinner from "../components/Spinner";
 import type { postModel } from "../types/Blog";
@@ -16,6 +16,7 @@ const BlogDetail = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [showAllComments, setShowAllComments] = useState(false);
   const { user } = useAuth();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!id) {
@@ -143,12 +144,21 @@ const BlogDetail = () => {
                   <img
                     src={blog.author?.profilePicture || 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png'}
                     alt="Author"
-                    className="w-12 h-12 rounded-full object-cover ring-2 ring-white shadow-sm"
+                    className="w-12 h-12 rounded-full object-cover ring-2 ring-white shadow-sm cursor-pointer"
+                    onClick={() => {
+                      navigate(`/requested-profile/${blog.author?._id}`, { state: { profileId: String(blog.author?._id) } });
+                    }}
+
                   />
                   <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-pulse"></div>
                 </div>
                 <div className="ml-4">
-                  <h3 className="font-semibold text-gray-900">{blog.author?.email ?? "authorEmail"}</h3>
+                  <h3
+                    onClick={() => {
+                      navigate(`/requested-profile/${blog.author?._id}`, { state: { profileId: String(blog.author?._id) } });
+                    }}
+
+                    className="font-semibold text-gray-900 cursor-pointer">{blog.author?.email ?? "authorEmail"}</h3>
                   <div className="flex items-center text-sm text-gray-500">
                     <Calendar className="w-4 h-4 mr-1" />
                     {formatDate(blog.createdAt)}

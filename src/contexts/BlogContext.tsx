@@ -12,7 +12,7 @@ import {
     addComment,
     getAllBlogs,
     getDetailedBlog,
-    getProfilePosts
+    getProfilePosts,
 } from "../services/Blog";
 
 export const BlogContext = createContext<BlogContextType | undefined>(undefined);
@@ -46,7 +46,7 @@ export const BlogProvider = ({ children }: { children: ReactNode }) => {
                 deletePost,
                 likePost,
                 addComment,
-                getProfilePosts
+                getProfilePosts,
             }}
         >
             {children}

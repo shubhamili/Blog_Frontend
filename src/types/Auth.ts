@@ -1,3 +1,4 @@
+import type { postModel } from "./Blog";
 
 export interface UserModel {
     id: string;
@@ -42,6 +43,44 @@ export interface updateProfileResponse {
     user?: UserModel;
 }
 
+
+
+
+export interface followerResponse {
+    success: boolean;
+    message: string;
+    data: {
+        followersCount: number;
+        followingCount: number;
+        followers: followAuther[];
+        following: followAuther[];
+    };
+}
+
+export interface followAuther {
+    _id: string;
+    author: string;
+    follower: string;
+}
+
+export interface reqProfileResponse {
+    success: boolean;
+    message: string;
+    data: ProfileData;
+}
+
+export interface ProfileData {
+    followersCount: number;
+    followingCount: number;
+    followers: followAuther[];
+    following: followAuther[];
+    userData: UserModel;
+    userPosts: postModel[];
+}
+
+
+
+
 export interface AuthContextType {
     user: UserModel | null;
     accessToken: string | null;
@@ -51,5 +90,8 @@ export interface AuthContextType {
     register: (data: RegisterPayload) => Promise<LoginResponse>;
     logout: () => Promise<LogOutResponse>;
     updateProfile: (data: FormData) => Promise<updateProfileResponse>;
+    getFollows: (id: string) => Promise<followerResponse>;
+    reqProfile: (profileId: string) => Promise<reqProfileResponse>;
+
 }
 

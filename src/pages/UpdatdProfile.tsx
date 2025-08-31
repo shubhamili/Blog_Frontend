@@ -160,7 +160,7 @@ const UpdateProfile: React.FC = () => {
             toast.error('Failed to update profile. Please try again.');
         } finally {
             setIsLoading(false);
-            navigate('/profile');
+            navigate('/profile');   
         }
     };
 

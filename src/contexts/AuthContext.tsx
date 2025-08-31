@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import type { AuthContextType, LoginPayload, LoginResponse, LogOutResponse, RegisterPayload, updateProfileResponse, UserModel } from "../types/Auth";
+import type { AuthContextType, followerResponse, LoginPayload, LoginResponse, LogOutResponse, RegisterPayload, reqProfileResponse, updateProfileResponse, UserModel } from "../types/Auth";
 import API from "../services/Api";
 import { toast } from "react-toastify";
 import { updateAccessToken as setAxiosToken } from "../services/Api";
@@ -101,6 +101,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
 
+    const getFollows = async (id: string): Promise<followerResponse> => {
+        try {
+            const res = await API.get(`/user/getFollow/${id}`);
+            return res.data;
+        } catch (err) {
+            console.error("Error fetching followers:", err);
+            throw err;
+        }
+    }
+
+
+    const reqProfile = async (profileId: string): Promise<reqProfileResponse> => {
+        try {
+            const res = await API.get(`/user/profile/${profileId}`);
+            return res.data;
+        } catch (err) {
+            console.error("Error fetching profile:", err);
+            throw err;
+        }
+    };
 
 
     return (
@@ -114,6 +134,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 register,
                 updateProfile,
                 logout,
+                getFollows,
+                reqProfile
             }} >
             {children}
         </AuthContext.Provider>

@@ -9,6 +9,7 @@ import PublicRoute from "./PublicRoute";
 import Profile from "../pages/Profile";
 import PostForm from "../pages/PostForm";
 import UpdateProfile from "../pages/UpdatdProfile";
+import UserProfile from "../pages/UserProfile";
 
 const AppRoutes = () => {
     return (
@@ -55,6 +56,11 @@ const AppRoutes = () => {
                 <Route path="/profile/update" element={
                     <ProtectedRoute>
                         <UpdateProfile />
+                    </ProtectedRoute>
+                } />
+                <Route path="/requested-profile/:profileId" element={
+                    <ProtectedRoute>
+                        <UserProfile />
                     </ProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />

@@ -93,8 +93,6 @@ export interface userProfilePostsResponse {
     data: postModel[];
 }
 
-
-
 export interface BlogContextType {
     blogs: postModel[];
     setBlogs: (blogs: postModel[]) => void;
