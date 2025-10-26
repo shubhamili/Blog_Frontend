@@ -13,6 +13,6 @@ createRoot(document.getElementById('root')!).render(
         <App />
       </BlogProvider>
     </AuthProvider>
-    <ToastContainer position="top-center" autoClose={2000} />
+    <ToastContainer position="bottom-right" autoClose={2000} />
   </StrictMode>,
 )

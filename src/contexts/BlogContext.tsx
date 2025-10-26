@@ -24,7 +24,7 @@ export const BlogProvider = ({ children }: { children: ReactNode }) => {
     const fetchBlogs = async () => {
         setLoading(true);
         try {
-            const res = await getAllBlogs(1, 5); // or (currentPage, pageSize)
+            const res = await getAllBlogs(1, 100); // or (currentPage, pageSize)
             setBlogs(res.posts);
         } finally {
             setLoading(false);
