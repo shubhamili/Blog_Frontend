@@ -20,7 +20,7 @@ const Home: React.FC = () => {
                 {/* Header */}
                 <div className="flex justify-between items-center mb-8">
                     <h1 className="text-2xl font-semibold text-gray-800 tracking-tight">
-                        Discover Stories
+                        Recent Posts
                     </h1>
                     {/* <button
                         onClick={handleCreatePost}

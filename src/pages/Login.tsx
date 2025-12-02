@@ -6,6 +6,9 @@ import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Eye, EyeOff } from "lucide-react";
+import socket from "../socket";
+
+
 
 const Login: React.FC = () => {
     const { login, isLoading } = useAuth();
@@ -30,7 +33,9 @@ const Login: React.FC = () => {
                 toast.error("Login failed!");
                 return;
             }
+            localStorage.setItem("userId", res.user.id);
             toast.success(res.success || "Login successful!");
+            socket.connect();
             navigate("/");
         } catch (err: any) {
             console.error("Login error", err);
