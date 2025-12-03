@@ -9,14 +9,11 @@ const App = () => {
 
   useEffect(() => {
     socket.on("new-notification", (data) => {
-      console.log("Realtime notification:", data);
+      console.log("Realtime notification is here🔥:", data);
 
-      // Show toast (React Hot Toast or ShadCN toast)
-      // example:
+
       toast.success(data.message);
 
-      // Update notification badge
-      // dispatch(addNotification(data))1
     });
 
     return () => {

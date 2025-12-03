@@ -1,10 +1,10 @@
 import { io } from "socket.io-client";
 
 
+const user = localStorage.getItem("userId");
+const userId = user;
 
-const user = localStorage.getItem("userId") ? { id: localStorage.getItem("userId") } : null;
-const userId = user ? user.id : null;
-console.log("userid", user);
+console.log("userid is printing :", user);
 
 export const socket = io("http://localhost:5000", {
     query: { userId },

@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const refreshAccessToken = async () => {
             try {
                 const response = await API.get("/user/refreshAccessToken");
-                console.log("Fetched user data:", response.data.user);
+                // console.log("Fetched user data:", response.data.user);
                 setAccessToken(response.data.accessToken || null);
                 setUser(response.data.user || null);
             } catch {
