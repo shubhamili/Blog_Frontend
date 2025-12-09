@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Eye, EyeOff } from "lucide-react";
 import socket from "../socket";
-
+import GoogleAuth from "../components/GoogleAuth";
 
 
 const Login: React.FC = () => {
@@ -44,9 +44,12 @@ const Login: React.FC = () => {
         }
     };
 
+
+
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12">
-            <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6 sm:p-8">
+            <div className="max-w-md w-full flex flex-col items-center bg-white rounded-lg shadow-lg p-6 sm:p-8">
                 <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6 tracking-tight">
                     Log In
                 </h2>
@@ -103,7 +106,14 @@ const Login: React.FC = () => {
                         Register
                     </Link>
                 </p>
+
+                <br className="mb-5" />
+                <GoogleAuth />
             </div>
+
+
+
+
         </div>
     );
 };
