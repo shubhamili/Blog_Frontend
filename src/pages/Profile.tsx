@@ -112,6 +112,9 @@ const Profile: React.FC = () => {
         );
     }
 
+
+    console.log('user.profile', user?.profilePicture)
+
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Delete Confirmation Dialog */}
@@ -149,7 +152,8 @@ const Profile: React.FC = () => {
                     {/* Profile Picture */}
                     <div className="relative">
                         <img
-                            src={user?.profilePicture || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.userName || user?.email || 'User')}&background=4f46e5&color=fff&size=128&bold=true`}
+                            // src={user?.profilePicture || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.userName || user?.email || 'User')}&background=4f46e5&color=fff&size=128&bold=true`}
+                            src={user?.profilePicture}
                             alt="Profile"
                             className="w-24 h-24 rounded-full object-cover shadow-md border-4 border-white"
                         />

@@ -14,7 +14,6 @@ export default function GoogleAuth() {
             const res = await API.post(
                 "/google/auth",
                 { credential }
-
             );
 
             const data = res.data;
